@@ -1,0 +1,112 @@
+<html>
+<head>
+    
+    <title>RPA Framework</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/litegraph.css">    
+    <link rel="stylesheet" type="text/css" href="/static/css/litegraph-editor.css">       
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">    
+    
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script type="text/javascript" src="/static/js/litegraph.js"></script>
+    <script type="text/javascript" src="/static/js/litegraph-editor.js"></script>
+    <script type="text/javascript" src="/static/js/p.js"></script>
+    <script type="text/javascript" src="/static/js/pandas.js"></script>
+   <!--  <script type="text/javascript" src="/static/js/jquery-1.6.2.min.js"></script>  -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"  crossorigin="anonymous"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+   
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="/static/js/bootbox.js"></script>
+
+</head>
+
+
+
+<body style='width:100%; height:100%'>
+
+<button class='btn' id='save' onclick="savegraph()">Save</button>
+<button class='btn' id='load' onclick="loadgraph()">Load</button>
+<button class='btn' id='run' onclick="rungraph()">Run</button>
+<span id='wait' ><img src="/static/css/wait.gif" width="25px">
+</span>
+<div id="main">
+    <div class="litegraph litegraph-editor">
+<canvas id='mycanvas' width='1024' height='720' style='border: 1px solid'></canvas>
+</div>
+</div>
+
+<script>
+var graph = new LGraph();
+
+var canvas = new LGraphCanvas("#mycanvas", graph);
+/*
+var node_const = LiteGraph.createNode("basic/start");
+node_const.pos = [200,200];
+graph.add(node_const);
+*/
+graph.start()
+$("#wait").hide();
+
+function savegraph()
+{    
+    bootbox.prompt("Please enter a name of graph!", function(result){ 
+        console.log(result); 
+        if (result == null) return ;
+        $.ajax({
+            method: "POST",
+            url: "save",
+            data: JSON.stringify({ name: result, data: graph.serialize() })
+        })
+            .done(function( msg ) {
+        alert( "Data Saved: " + msg );
+    });        
+    });
+}
+function rungraph()
+{    
+        $("#wait").show();
+        $.ajax({
+            method: "POST",
+            url: "run",
+            data: JSON.stringify({ data: graph.serialize() })
+        })
+        .done(function( msg ) {
+        $("#wait").hide();
+        
+            bootbox.alert({
+	             message: msg
+            });
+             
+    });        
+}
+
+function loadgraph() 
+{
+    $.ajax({
+            method: "GET",
+            url: "listsaved",            
+        })
+        .done(function(msg) {
+            
+            bootbox.prompt({
+                title: "Choose saved graph.",
+                inputType: 'select',
+                inputOptions: JSON.parse(msg),
+                callback: function (result) {
+                    $.ajax({
+                        method: "GET",
+                        url: "load/"+result,            
+                    })                    
+                    .done(function(data) {                                              
+                        graph.configure(  JSON.parse(data) );                        
+                    })
+                }
+        })
+    });
+}
+</script>
+</body>
+</html>
