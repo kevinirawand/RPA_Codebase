@@ -74,6 +74,22 @@
 
     LiteGraph.registerNodeType("basic/start", start);
 
+    function accu_weather() {
+        this.addOutput("result", "boolean");
+        this.addProperty("selected_city", ""); 
+        this.addProperty("url_accu_weather", "");  
+        this.addProperty("api_target", ""); 
+
+        //this.widget = this.addWidget("number","value",1,"value");
+        //this.widgets_up = true;
+        //this.size = [180, 30];
+   }
+
+   accu_weather.title = "accu weather";
+   accu_weather.desc = "scraper";
+
+   LiteGraph.registerNodeType("basic/accu_weather", accu_weather);
+
    
 
  })(this);
