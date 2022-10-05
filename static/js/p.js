@@ -2,13 +2,11 @@
 (function(global) {
     var LiteGraph = global.LiteGraph;
 
-   
-
     function addition() {
-         this.addInput("a", "number");
-  this.addInput("b", "number");
+        this.addInput("a", "number");
+        this.addInput("b", "number");
  
-         this.addOutput("result", "number");
+        this.addOutput("result", "number");
  
       
         //this.widget = this.addWidget("number","value",1,"value");
@@ -21,13 +19,10 @@
 
     LiteGraph.registerNodeType("basic/addition", addition);
 
-   
-
     function integer() {
         
-         this.addOutput("result", "number");
- 
-       this.addProperty("a", "+"); 
+        this.addOutput("result", "number");
+        this.addProperty("a", "+"); 
       
         //this.widget = this.addWidget("number","value",1,"value");
         //this.widgets_up = true;
@@ -39,13 +34,9 @@
 
     LiteGraph.registerNodeType("basic/integer", integer);
 
-   
-
     function result() {
          this.addInput("result", "number");
  
-        
-      
         //this.widget = this.addWidget("number","value",1,"value");
         //this.widgets_up = true;
         //this.size = [180, 30];
@@ -56,13 +47,10 @@
 
     LiteGraph.registerNodeType("basic/result", result);
 
-   
-
     function start() {
         
-         this.addOutput("result", "number");
- 
-       this.addProperty("a", "0"); 
+        this.addOutput("result", "number");
+        this.addProperty("a", "0"); 
       
         //this.widget = this.addWidget("number","value",1,"value");
         //this.widgets_up = true;
@@ -74,22 +62,23 @@
 
     LiteGraph.registerNodeType("basic/start", start);
 
-    function accu_weather() {
-        this.addOutput("result", "boolean");
-        this.addProperty("selected_city", ""); 
-        this.addProperty("url_accu_weather", "");  
-        this.addProperty("api_target", ""); 
+    function accuweather() {
+        this.addInput("result", "number");
+        // this.addProperty("selected_city", ""); 
+        // this.addProperty("url_accu_weather", "");  
+        // this.addProperty("api_target", ""); 
+        // this.addOutput("result", "number");
+        this.addOutput("result", "number");
+        this.addProperty("a", "0"); 
 
         //this.widget = this.addWidget("number","value",1,"value");
         //this.widgets_up = true;
         //this.size = [180, 30];
    }
 
-   accu_weather.title = "accu weather";
-   accu_weather.desc = "scraper";
+   accuweather.title = "accuweather";
+   accuweather.desc = "scraper";
 
-   LiteGraph.registerNodeType("basic/accu_weather", accu_weather);
-
-   
+   LiteGraph.registerNodeType("basic/accuweather", accuweather);
 
  })(this);
