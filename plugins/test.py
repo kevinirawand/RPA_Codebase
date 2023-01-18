@@ -8,20 +8,20 @@ class start:
        def execute(self, params):
               pass
 
-class addition:
+class divider:
        def __init__(self):
               self.input_number_a = 0
               self.input_number_b = 0
               self.output_number_result = 0
 
        def getValue(self, n):
-              print("getValue addition %d %d " % (int(self.input_number_a), int(self.input_number_b)))
-              return int(self.input_number_a) * int(self.input_number_b)
+              print("getValue divider %d %d " % (int(self.input_number_a), int(self.input_number_b)))
+              return int(self.input_number_a) / int(self.input_number_b)
 
        def execute(self, params):
               self.input_number_a = params[0]
               self.input_number_b = params[1]
-              print("execute addition  %d %d " % (int(self.input_number_a),int(self.input_number_b)))
+              print("execute divider %d %d " % (int(self.input_number_a),int(self.input_number_b)))
 
 # class divider:
 #        def __init__(self):
