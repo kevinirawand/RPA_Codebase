@@ -57,13 +57,13 @@ class NodeGraph:
     def run(self):
         self._computed = True
         print(" RUN %s \n" % ( self._node["type"] ))
-        param=[]
+        params=[]
         for i in self._input:
               if i.isComputed() == False:
                      i.run() 
-              param.append(i._nobj.getValue(i._node))
-        print(param)
-        result = self._nobj.execute(param)
+              params.append(i._nobj.getValue(i._node))
+        print(params)
+        result = self._nobj.execute(params)
 
         if len(self._output) == 0:
            print("RESULT")
