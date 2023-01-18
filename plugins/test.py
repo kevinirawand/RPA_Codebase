@@ -16,7 +16,7 @@ class divider:
 
        def getValue(self, n):
               print("getValue divider %d %d " % (int(self.input_number_a), int(self.input_number_b)))
-              return int(self.input_number_a) / int(self.input_number_b)
+              return int(self.input_number_a) + int(self.input_number_b)
 
        def execute(self, params):
               self.input_number_a = params[0]
