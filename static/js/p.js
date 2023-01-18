@@ -19,10 +19,27 @@
 
     LiteGraph.registerNodeType("basic/addition", addition);
 
+    function divider() {
+        this.addInput("a", "number");
+        this.addInput("b", "number");
+ 
+        this.addOutput("result", "number");
+ 
+      
+        //this.widget = this.addWidget("number","value",1,"value");
+        //this.widgets_up = true;
+        //this.size = [180, 30];
+    }
+
+    addition.title = "divider";
+    addition.desc = "divider";
+
+    LiteGraph.registerNodeType("basic/divider", divider);
+
     function integer() {
         
         this.addOutput("result", "number");
-        this.addProperty("a", "+"); 
+        this.addProperty("a", "0"); 
       
         //this.widget = this.addWidget("number","value",1,"value");
         //this.widgets_up = true;
