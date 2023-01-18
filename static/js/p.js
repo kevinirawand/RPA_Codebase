@@ -31,8 +31,8 @@
         //this.size = [180, 30];
     }
 
-    addition.title = "divider";
-    addition.desc = "divider";
+    divider.title = "divider";
+    divider.desc = "divider";
 
     LiteGraph.registerNodeType("basic/divider", divider);
 
