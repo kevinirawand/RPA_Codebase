@@ -2422,6 +2422,7 @@
         //create serialization object
         var o = {
             id: this.id,
+            title: this.title,
             type: this.type,
             pos: this.pos,
             size: this.size,

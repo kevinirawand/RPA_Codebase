@@ -59,8 +59,8 @@
         //this.size = [180, 30];
     }
 
-    result.title = "result";
-    result.desc = "result";
+    result.title = "end";
+    result.desc = "end";
 
     LiteGraph.registerNodeType("basic/result", result);
 
@@ -79,13 +79,12 @@
 
     LiteGraph.registerNodeType("basic/start", start);
 
-    function accuweather() {
-        this.addInput("result", "number");
-        // this.addProperty("selected_city", ""); 
-        // this.addProperty("url_accu_weather", "");  
-        // this.addProperty("api_target", ""); 
+    function buka_browser() {
         // this.addOutput("result", "number");
+        this.addInput("a", "number");
         this.addOutput("result", "number");
+        this.addProperty("url", "Chrome"); 
+        this.addProperty("browser", "https://google.com");
         this.addProperty("a", "0"); 
 
         //this.widget = this.addWidget("number","value",1,"value");
@@ -93,9 +92,9 @@
         //this.size = [180, 30];
    }
 
-   accuweather.title = "accuweather";
-   accuweather.desc = "scraper";
+   buka_browser.title = "Buka Browser";
+   buka_browser.desc = "Node untuk membuka browser";
 
-   LiteGraph.registerNodeType("basic/accuweather", accuweather);
+   LiteGraph.registerNodeType("basic/buka_browser", buka_browser);
 
  })(this);

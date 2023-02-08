@@ -60,7 +60,7 @@ class result:
               self.input_int_result = params
               return self.input_int_result
 
-class accuweather:
+class buka_browser:
        def __init__(self):
               self.output_number_result = 0
               self.property_number_a = "0"
