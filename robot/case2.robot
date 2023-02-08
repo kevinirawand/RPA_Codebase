@@ -7,4 +7,4 @@ Default Tags			positive
 
 *** Test Cases ***
 Start Case
-	Buka Browser	https://google.com	Chrome
+	Buka Browser	https://citylab.itb.ac.id	Chrome

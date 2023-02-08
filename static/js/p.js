@@ -83,7 +83,7 @@
         // this.addOutput("result", "number");
         this.addInput("a", "number");
         this.addOutput("result", "number");
-        this.addProperty("url", "https://google.com"); 
+        this.addProperty("url", "https://citylab.itb.ac.id"); 
         this.addProperty("browser", "Chrome");
         this.addProperty("a", "0"); 
 

@@ -23,7 +23,7 @@ def generate_statement(node):
 def init_robot_file():
     init_text = [
         "*** Settings ***\n",
-        "Documentation\tA test suite for valid login.\n",
+        "Documentation\tRobot Framework Template.\n",
         "...\n",
         "...\t\t\t\t\tKeywords are imported from the resource file\n",
         "Resource\t\t\tkeywords.resource\n",
