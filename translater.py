@@ -44,7 +44,7 @@ def generate_robot_file(filename, statements):
     
 # Opening JSON file
 file_location = 'case2.json'
-filename = file_location.split(".")[0] + '.robot'
+filename = 'output_studio.robot'
 path = 'datasaved/' + file_location
 
 with open(path, 'r') as fcc_file:

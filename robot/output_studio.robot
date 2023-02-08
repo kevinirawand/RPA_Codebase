@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation	A test suite for valid login.
+Documentation	Robot Framework Template.
 ...
 ...					Keywords are imported from the resource file
 Resource			keywords.resource

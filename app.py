@@ -13,6 +13,9 @@ import json
 import pprint
 import plugin as pg
 
+import subprocess
+import translater
+
 pm = pg.pluginManager("plugins")
 
 data = {}
@@ -162,10 +165,11 @@ async def listfile(request: Request):
 
 @app.post("/save", response_class=HTMLResponse)
 async def save(request: Request):
-    payload = await request.json()    
+    payload = await request.json()
     # TODO check security in string...
     with open(os.path.join('datasaved',"%s.json" % (payload["name"])), "w") as file1:
-        file1.write(json.dumps(payload["data"], indent=4))    
+        file1.write(json.dumps(payload["data"], indent=4))       
+        translater.run()
         return "OK"    
 
 @app.get("/load/{filejson}", response_class=HTMLResponse)
@@ -176,6 +180,16 @@ async def load(filejson: str):
 
 @app.post("/run", response_class=JSONResponse)
 async def run(request:Request):
+    command_success1 = "robot robot/output_studio.robot"
+    command_success2 = "python translater.py"
+    try:
+        result_sucess = subprocess.check_output( [command_success1], shell=True)
+        result_sucess = subprocess.check_output( [command_success2], shell=True)
+    except subprocess.CalledProcessError as e:
+        return "An error occurred while trying to fetch task status updates."
+    
+    print(result_sucess)
+    
     payload = await request.json()    
     g = Graph()
     data = payload["data"]
