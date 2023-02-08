@@ -83,8 +83,8 @@
         // this.addOutput("result", "number");
         this.addInput("a", "number");
         this.addOutput("result", "number");
-        this.addProperty("url", "Chrome"); 
-        this.addProperty("browser", "https://google.com");
+        this.addProperty("url", "https://google.com"); 
+        this.addProperty("browser", "Chrome");
         this.addProperty("a", "0"); 
 
         //this.widget = this.addWidget("number","value",1,"value");
