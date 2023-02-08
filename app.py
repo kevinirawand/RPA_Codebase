@@ -14,7 +14,6 @@ import pprint
 import plugin as pg
 
 import subprocess
-import translater
 
 pm = pg.pluginManager("plugins")
 
@@ -168,8 +167,7 @@ async def save(request: Request):
     payload = await request.json()
     # TODO check security in string...
     with open(os.path.join('datasaved',"%s.json" % (payload["name"])), "w") as file1:
-        file1.write(json.dumps(payload["data"], indent=4))       
-        translater.run()
+        file1.write(json.dumps(payload["data"], indent=4))
         return "OK"    
 
 @app.get("/load/{filejson}", response_class=HTMLResponse)
