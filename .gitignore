@@ -138,7 +138,7 @@ dmypy.json
 cython_debug/
 
 # Datasaved
-datasaved/
+datasaved/*
 
 # Robot
 log.html
