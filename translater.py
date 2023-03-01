@@ -1,4 +1,5 @@
 import json
+import os
 
 def generate_params(properties):
     keys = properties.keys()
@@ -45,7 +46,7 @@ def generate_robot_file(filename, statements):
 # Opening JSON file
 file_location = 'case2.json'
 filename = 'output_studio.robot'
-path = 'datasaved/' + file_location
+path = os.path.join('datasaved',file_location)
 
 with open(path, 'r') as fcc_file:
     data = json.load(fcc_file)

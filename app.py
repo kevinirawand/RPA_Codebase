@@ -14,6 +14,7 @@ import pprint
 import plugin as pg
 
 import subprocess
+import sys
 
 pm = pg.pluginManager("plugins")
 
@@ -172,21 +173,29 @@ async def save(request: Request):
 
 @app.get("/load/{filejson}", response_class=HTMLResponse)
 async def load(filejson: str):
-    print(filejson)
+    print(os.path.join('datasaved',filejson))
     with open(os.path.join('datasaved',filejson), "r") as file1:
         return file1.read()
 
 @app.post("/run", response_class=JSONResponse)
 async def run(request:Request):
-    command_success1 = "robot robot/output_studio.robot"
+    command_success1 = "robot " + os.path.join('robot', 'output_studio.robot')
     command_success2 = "python translater.py"
-    try:
-        result_sucess = subprocess.check_output( [command_success1], shell=True)
-        result_sucess = subprocess.check_output( [command_success2], shell=True)
-    except subprocess.CalledProcessError as e:
-        return "An error occurred while trying to fetch task status updates."
+
+    if os.name == 'nt':
+        theproc = subprocess.Popen([sys.executable, 'translater.py'])
+        theproc2 = subprocess.Popen(['robot', os.path.join('robot', 'output_studio.robot')])
+        theproc.communicate()
+        theproc2.communicate()
+    else:
+        try:
+            result_sucess = subprocess.check_output( [command_success1], shell=True)
+            result_sucess = subprocess.check_output( [command_success2], shell=True)
+        except subprocess.CalledProcessError as e:
+            # return "An error occurred while trying to fetch task status updates."
+            return e
     
-    print(result_sucess)
+        print(result_sucess)
     
     payload = await request.json()    
     g = Graph()
