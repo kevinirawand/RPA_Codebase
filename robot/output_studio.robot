@@ -7,4 +7,4 @@ Default Tags			positive
 
 *** Test Cases ***
 Start Case
-	Buka Browser	https://citylab.itb.ac.id	Chrome
+	Data BPBD	http://bpbd.semarangkota.go.id/pages/data-bencana	Chrome

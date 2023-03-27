@@ -97,4 +97,16 @@
 
    LiteGraph.registerNodeType("basic/buka_browser", buka_browser);
 
+   function data_BPBD() {
+       this.addInput("a", "number");
+       this.addOutput("result", "number");
+       this.addProperty("url", "http://bpbd.semarangkota.go.id/pages/data-bencana")
+       this.addProperty("browser", "Chrome");
+       this.addProperty("a", "0");
+   }
+   data_BPBD.title = "Data BPBD";
+   data_BPBD.desc = "Pengambilan data BPBD";
+
+   LiteGraph.registerNodeType("basic/data_bpbd", data_BPBD);
+
  })(this);
