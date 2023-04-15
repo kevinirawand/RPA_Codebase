@@ -22,91 +22,125 @@
     <script type="text/javascript" src="/static/js/bootbox.js"></script>
 
 </head>
-
-
-
 <body style='width:100%; height:100%'>
+    <!-- Login Screen -->
+    <div id="login">
+        <div class="container">
+            <form class="">
+                <h3>RPA Studio</h3>
+                <div class="form-group">
+                    <label for="InputEmail">Username</label>
+                    <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="InputPassword">Password</label>
+                    <input type="password" class="form-control" id="InputPassword" placeholder="Password">
+                </div>
+                <button id="btn-login" class="btn btn-primary">Login</button>
+            </form>
+            </div>
+        </div>
+    </div>
 
-<button class='btn' id='save' onclick="savegraph()">Save</button>
-<button class='btn' id='load' onclick="loadgraph()">Load</button>
-<button class='btn' id='run' onclick="rungraph()">Run</button>
-<span id='wait' ><img src="/static/css/wait.gif" width="25px">
-</span>
-<div id="main">
-    <div class="litegraph litegraph-editor">
-<canvas id='mycanvas' width='1024' height='720' style='border: 1px solid'></canvas>
-</div>
-</div>
+    <!-- Home Screen -->
+    <div id="home">
+        <button class='btn' id='save' onclick="savegraph()">Save</button>
+        <button class='btn' id='load' onclick="loadgraph()">Load</button>
+        <button class='btn' id='run' onclick="rungraph()">Run</button>
+        <button class='btn' id='logout' onclick="logout()">Logout</button>
+        <span id='wait' ><img src="/static/css/wait.gif" width="25px">
+        </span>
+        <div id="main">
+            <div class="litegraph litegraph-editor">
+                <canvas id='mycanvas' width='1024' height='720' style='border: 1px solid'></canvas>
+            </div>
+        </div>
+    </div>
 
-<script>
-var graph = new LGraph();
+    <script>
+        $("div#home").hide();
+        $("#btn-login").click(function(e) {
+            e.preventDefault()
+            $("div#login").hide();
+            $("div#home").show();
+        });
+        var graph = new LGraph();
+        var canvas = new LGraphCanvas("#mycanvas", graph);
 
-var canvas = new LGraphCanvas("#mycanvas", graph);
-/*
-var node_const = LiteGraph.createNode("basic/start");
-node_const.pos = [200,200];
-graph.add(node_const);
-*/
-graph.start()
-$("#wait").hide();
+        // var node_const = LiteGraph.createNode("basic/start");
+        // node_const.pos = [200,200];
+        // graph.add(node_const);
 
-function savegraph()
-{    
-    bootbox.prompt("Please enter a name of graph!", function(result){ 
-        console.log(result); 
-        if (result == null) return ;
-        $.ajax({
-            method: "POST",
-            url: "save",
-            data: JSON.stringify({ name: result, data: graph.serialize() })
-        })
-            .done(function( msg ) {
-        alert( "Data Saved: " + msg );
-    });        
-    });
-}
-function rungraph()
-{    
-        $("#wait").show();
-        $.ajax({
-            method: "POST",
-            url: "run",
-            data: JSON.stringify({ data: graph.serialize() })
-        })
-        .done(function( msg ) {
+        // var node_const1 = LiteGraph.createNode("basic/end");
+        // node_const1.pos = [200,400];
+        // graph.add(node_const1);
+
+        graph.start()
         $("#wait").hide();
-        
-            bootbox.alert({
-	             message: msg
-            });
-             
-    });        
-}
 
-function loadgraph() 
-{
-    $.ajax({
-            method: "GET",
-            url: "listsaved",            
-        })
-        .done(function(msg) {
-            
-            bootbox.prompt({
-                title: "Choose saved graph.",
-                inputType: 'select',
-                inputOptions: JSON.parse(msg),
-                callback: function (result) {
-                    $.ajax({
-                        method: "GET",
-                        url: "load/"+result,            
-                    })                    
-                    .done(function(data) {                                              
-                        graph.configure(  JSON.parse(data) );                        
-                    })
-                }
-        })
-    });
-}
-</script>
+        function logout()
+        {
+            $("div#login").show();
+            $("div#home").hide();
+        }
+
+        function savegraph()
+        {    
+            bootbox.prompt("Please enter a name of graph!", function(result){ 
+                console.log(result); 
+                if (result == null) return ;
+                $.ajax({
+                    method: "POST",
+                    url: "save",
+                    data: JSON.stringify({ name: result, data: graph.serialize() })
+                })
+                    .done(function( msg ) {
+                alert( "Data Saved: " + msg );
+            });        
+            });
+        }
+        function rungraph()
+        {    
+                $("#wait").show();
+                $.ajax({
+                    method: "POST",
+                    url: "run",
+                    data: JSON.stringify({ data: graph.serialize() })
+                })
+                .done(function( msg ) {
+                $("#wait").hide();
+                
+                    bootbox.alert({
+                        message: msg
+                    });
+                    
+            });        
+        }
+
+        function loadgraph() 
+        {
+            $.ajax({
+                    method: "GET",
+                    url: "listsaved",            
+                })
+                .done(function(msg) {
+                    
+                    bootbox.prompt({
+                        title: "Choose saved graph.",
+                        inputType: 'select',
+                        inputOptions: JSON.parse(msg),
+                        callback: function (result) {
+                            $.ajax({
+                                method: "GET",
+                                url: "load/"+result,            
+                            })                    
+                            .done(function(data) {                                              
+                                graph.configure(  JSON.parse(data) );                        
+                            })
+                        }
+                })
+            });
+        }
+    </script>
 </body>
 </html>

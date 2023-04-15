@@ -83,3 +83,11 @@ body, html {
   background: #839aed;
   height: 80px;
 }
+
+.container {
+  /* background: black; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
