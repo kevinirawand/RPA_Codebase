@@ -3,7 +3,7 @@ Documentation     This is a resource file, that can contain variables and keywor
 ...               Keywords defined here can be used where this Keywords.resource in loaded.
 Library           Selenium2Library
 Library           OperatingSystem
-Library           BuiltIn
+
 
 *** Keywords ***
 Buka Browser
@@ -45,39 +45,22 @@ Download should be done
     
 Data BPBD
    [Arguments]     ${URL}      ${browser}
-   [Setup]    Setup Browser    ${URL}    ${browser}
    ${now}    Get Time    epoch
-   ${download directory}    Join Path    ${OUTPUT DIR}    storage
+   ${download directory}    Join Path    ${OUTPUT DIR}    ${now}
    Create Directory    ${download directory}
-   Open Browser    ${URL}    ${browser}
-   ${elements}    Get WebElements    partial link:download
-   ${len}    Get Length    ${elements}
-   ${idx}    Evaluate    ${len}-1
-   ${link}    Set Variable    ${elements}[${idx}]
-   Click Element    ${link}
-   ${file}    Wait Until Keyword Succeeds    1 min    0 sec    Download should be done    ${download directory}
-   ${extension}    Evaluate    os.path.splitext('${file}')[1]
-   ${new_file}    Set Variable    ${download directory}/${now}${extension}
-   ${files}    List Files In Directory    ${download directory}
-   Run Keyword If    ${files}    Log    Multiple files found in the download directory.
-   Run Keyword If    ${files}    Fail    Expected only one file in the download directory.
-   Copy File    ${file}    ${new_file}
-   Remove File    ${file}
-   RETURN  SUCCESS
-
-Setup Browser
-   [Arguments]    ${URL}    ${browser}
-   ${download directory}    Join Path    ${OUTPUT DIR}    storage
-   Create Directory    ${download directory}
-   Open Browser    ${URL}    ${browser}
    ${chrome options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+   # list of plugins to disable. disabling PDF Viewer is necessary so that PDFs are saved rather than displayed
    ${disabled}    Create List    Chrome PDF Viewer
    ${prefs}    Create Dictionary    download.default_directory=${download directory}    plugins.plugins_disabled=${disabled}
    Call Method    ${chrome options}    add_experimental_option    prefs    ${prefs}
    Create Webdriver    Chrome    chrome_options=${chrome options}
-   Go To    ${URL}
-
-Rename File
-   [Arguments]    ${source}    ${target}
-   ${output}    Run Keyword And Return Status    Run Python    import os; os.rename('${source}', '${target}')
-   Run Keyword If    not ${output}    Fail    Failed to rename file: ${source} to ${target}
+   Goto    ${URL}
+   ${elements} =   Get WebElements   partial link:ownload
+   ${len}=     Get Length      ${elements}
+   ${idx}=     evaluate    ${len}-1
+   ${link}=    Set Variable    ${elements}[${idx}]
+   Click Element   ${link}
+   Sleep   10s
+   # wait for download to finish
+   ${file}    Wait Until Keyword Succeeds    1 min    2 sec    Download should be done    ${download directory}
+   RETURN  SUCCESS

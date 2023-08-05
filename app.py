@@ -73,6 +73,7 @@ class NodeGraph:
            print(result)
            return result
 
+
         for o in self._output:
              return o.run()
 
